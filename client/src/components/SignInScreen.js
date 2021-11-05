@@ -49,7 +49,7 @@ export default function SignInScreen() {
 
   return (
     // <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: '85%' }}>
         <CssBaseline />
         <Grid
           item
@@ -126,7 +126,6 @@ export default function SignInScreen() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
