@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react"
 import { useHistory } from 'react-router-dom'
 import api from '../api'
+import ErrorModal from '../components/ErrorModal'
 
 export const AuthContext = createContext({});
 console.log("create AuthContext: " + AuthContext);
@@ -88,7 +89,7 @@ function AuthContextProvider(props) {
     auth.registerUser = async function(userData, store) {
         // console.log("here")
         const response = await api.registerUser(userData);
-        console.log("here2")
+        // console.log("here2")
         console.log(response)      
         if (response.status === 200) {
             authReducer({
@@ -97,10 +98,11 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            // console.log("here")
+            
             history.push("/");
             store.loadIdNamePairs();
         }
+
     }
     auth.logoutUser = async function(userData) {
         const response = await api.logoutUser(userData);

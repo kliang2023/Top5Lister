@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GlobalStoreContext } from '../store'
 
+
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext)

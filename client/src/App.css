@@ -263,7 +263,7 @@ input {
 
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
 
-.modal {
+.modal,.error-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -282,12 +282,12 @@ input {
   font-family: var(--font-primary);
 }
 
-.modal.is-visible {
+.modal.is-visible,.error-modal.is-visible {
   visibility: visible;
   opacity: 1;
 }
 
-.modal-dialog {
+.modal-dialog, .error-modal-dialog {
   position: relative;
   max-width: 800px;
   max-height: 80vh;
@@ -299,16 +299,16 @@ input {
   border-style: groove;
 }
 
-.modal-dialog > * {
+.modal-dialog, .error-modal-dialog > * {
   padding: 1rem;
 }
 
 .modal-header,
-.modal-footer {
+.modal-footer, .error-modal-header, .error-modal-footer {
   background: var(--lightgray);
 }
 
-.modal-header {
+.modal-header, .error-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -316,7 +316,7 @@ input {
 }
 
 .modal-header,
-.modal-close {
+.modal-close, .error-modal-header, .error-modal-close {
   font-size: 1.5rem;
 }
 
