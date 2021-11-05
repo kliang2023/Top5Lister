@@ -79,7 +79,20 @@ registerUser = async (req, res) => {
     }
 }
 
+signUserOut = async (req, res) => {
+    try {
+        return await res.cookie('token', req.cookies.token, {
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        }).status(200).json({ success: true, message: 'User logged out successfully' })
+    } catch (e) {
+        console.error(e)
+        res.status(500).send();
+    }
+}
+
 module.exports = {
     getLoggedIn,
-    registerUser
+    registerUser,
+    signUserOut
 }

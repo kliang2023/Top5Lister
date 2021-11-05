@@ -4,6 +4,10 @@ import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -20,6 +24,8 @@ const HomeScreen = () => {
         store.createNewList();
     }
     let listCard = "";
+ 
+    
     if (store) {
         listCard = 
             <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
@@ -53,6 +59,7 @@ const HomeScreen = () => {
                 }
             </div>
         </div>)
+    
 }
 
 export default HomeScreen;

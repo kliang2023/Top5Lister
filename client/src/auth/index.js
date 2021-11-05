@@ -8,7 +8,8 @@ console.log("create AuthContext: " + AuthContext);
 // THESE ARE ALL THE TYPES OF UPDATES TO OUR AUTH STATE THAT CAN BE PROCESSED
 export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
-     REGISTER_USER: "REGISTER_USER"
+     REGISTER_USER: "REGISTER_USER",
+     SIGN_USER: "SIGN_USER"
     // SET_LOGGED_IN: "SET_LOGGED_IN"
 }
 
@@ -32,12 +33,12 @@ function AuthContextProvider(props) {
                     loggedIn: payload.loggedIn
                 });
             }
-            // case AuthActionType.SET_LOGGED_IN: {
-            //     return setAuth({
-            //         user: payload.user,
-            //         loggedIn: true
-            //     });
-            // }
+            case AuthActionType.SIGN_USER: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false
+                });
+            }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
@@ -51,7 +52,9 @@ function AuthContextProvider(props) {
 
     auth.getLoggedIn = async function () {
         const response = await api.getLoggedIn();
-        if (response.status === 200) {
+        console.log("here")
+        console.log(response)
+        if (response.status === 200 && response.data.user !== null) {
             authReducer({
                 type: AuthActionType.GET_LOGGED_IN,
                 payload: {
@@ -76,8 +79,10 @@ function AuthContextProvider(props) {
     // }
 
     auth.registerUser = async function(userData, store) {
-        console.log("here")
-        const response = await api.registerUser(userData);      
+        // console.log("here")
+        const response = await api.registerUser(userData);
+        console.log("here2")
+        console.log(response)      
         if (response.status === 200) {
             authReducer({
                 type: AuthActionType.REGISTER_USER,
@@ -88,6 +93,20 @@ function AuthContextProvider(props) {
             // console.log("here")
             history.push("/");
             store.loadIdNamePairs();
+        }
+    }
+    auth.logoutUser = async function(userData) {
+        const response = await api.logoutUser(userData);
+        console.log("hjelasdf")
+        console.log(response)
+        if (response.status === 200) {
+            console.log("hello!!!!")
+            authReducer({
+                type: AuthActionType.SIGN_USER
+            })
+            // console.log("here")
+            history.push("/");
+            // store.loadIdNamePairs();
         }
     }
 
