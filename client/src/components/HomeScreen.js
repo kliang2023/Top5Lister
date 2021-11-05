@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
+import AuthContext from '../auth'
 import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
@@ -14,6 +15,7 @@ import Modal from '@mui/material/Modal';
     @author McKilla Gorilla
 */
 const HomeScreen = () => {
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
