@@ -48,14 +48,14 @@ function ListCard(props) {
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
-        DeleteModal().open=true;
+        // DeleteModal().open=true;
     }
 
-    async function handleDeleteListConfirmed(event) {
-        event.stopPropagation();
-        store.deleteMarkedList();
-        DeleteModal().handleCloseModal();
-    }
+    // async function handleDeleteListConfirmed(event) {
+    //     event.stopPropagation();
+    //     store.deleteMarkedList();
+    //     DeleteModal().handleCloseModal();
+    // }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
@@ -67,44 +67,7 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      };
-      
-     function DeleteModal() {
-        const [open, setOpen] = React.useState(false);
-        const handleCloseModal = () => {
-            setOpen(false);
-            store.unmarkListForDeletion();};
-        // const handleOpenModal = () => setOpen(true);
-        const handleDeleteConfirmed = () => handleDeleteListConfirmed;
-        return (
-           
-              <Modal
-                open={open}
-                onClose={handleCloseModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Delete List?
-                  </Typography>
-                  <Button onClick={handleDeleteConfirmed}>Confirm</Button>
-                  <Button onClick={handleCloseModal}>Delete</Button>
-                </Box>
-              </Modal>
-            
-          );
-        }
+    
        
     let cardElement =
         <ListItem

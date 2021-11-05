@@ -105,7 +105,7 @@ getTop5Lists = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Top 5 Lists not found` })
         }
-        return res.status(200).json({ success: true, data: top5Lists })
+        return res.status(200).json({ success: true, data: top5Lists.filter(own => own.ownerEmail===auth.user.email) })
     }).catch(err => console.log(err))
 }
 getTop5ListPairs = async (req, res) => {
