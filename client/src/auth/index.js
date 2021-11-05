@@ -9,7 +9,8 @@ console.log("create AuthContext: " + AuthContext);
 export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
      REGISTER_USER: "REGISTER_USER",
-     SIGN_USER: "SIGN_USER"
+     SIGN_OUT_USER: "SIGN_OUT_USER",
+     SIGN_IN_USER: "SIGN_IN_USER"
     // SET_LOGGED_IN: "SET_LOGGED_IN"
 }
 
@@ -33,10 +34,16 @@ function AuthContextProvider(props) {
                     loggedIn: payload.loggedIn
                 });
             }
-            case AuthActionType.SIGN_USER: {
+            case AuthActionType.SIGN_OUT_USER: {
                 return setAuth({
                     user: null,
                     loggedIn: false
+                });
+            }
+            case AuthActionType.SIGN_IN_USER: {
+                return setAuth({
+                    user: payload.user,
+                    loggedIn: true
                 });
             }
             case AuthActionType.REGISTER_USER: {
@@ -102,7 +109,23 @@ function AuthContextProvider(props) {
         if (response.status === 200) {
             console.log("hello!!!!")
             authReducer({
-                type: AuthActionType.SIGN_USER
+                type: AuthActionType.SIGN_OUT_USER
+            })
+            // console.log("here")
+            history.push("/");
+            // store.loadIdNamePairs();
+        }
+    }
+
+    auth.loginUser = async function(userData) {
+        const response = await api.loginUser(userData);
+        if (response.status === 200) {
+            console.log("valid")
+            authReducer({
+                type: AuthActionType.SIGN_IN_USER,
+                payload: {
+                    user: response.data.user
+                }
             })
             // console.log("here")
             history.push("/");

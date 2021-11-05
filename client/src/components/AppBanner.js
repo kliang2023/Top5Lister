@@ -30,7 +30,7 @@ export default function AppBanner() {
         handleMenuClose();
         auth.logoutUser({email: auth.user.email});
     }
-
+   
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
         <Menu
@@ -81,7 +81,7 @@ export default function AppBanner() {
     }
     
     function getAccountMenu(loggedIn) {
-        if (auth.loggedIn){
+        if (loggedIn){
             return auth.user.firstName[0] + auth.user.lastName[0];
         }
         return <AccountCircle />;

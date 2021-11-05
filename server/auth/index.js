@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken")
 function authManager() {
     verify = function (req, res, next) {
         try {
-            console.log(req.cookies.token);
+            // console.log(req.cookies.token);
             const token = req.cookies.token;
-            console.log("here first");
+            // console.log("here first");
             if (!token) {
-                console.log("and here");
+                // console.log("and here");
                 return res.status(200).json({
                     loggedIn: false,
                     user: null

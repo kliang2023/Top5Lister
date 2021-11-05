@@ -91,8 +91,38 @@ signUserOut = async (req, res) => {
     }
 }
 
+loginUser = async (req, res) => {
+    // console.log(req)
+    try {
+        const {email, password} = req.body;
+        const loggedInUser = await User.findOne({ email: email });
+        const hash = loggedInUser.passwordHash;
+        const verifyPassword = await bcrypt.compare(password, hash);
+        if (verifyPassword == true)
+        {
+            const token = auth.signToken(loggedInUser);
+            await res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none"
+            }).status(200).json({
+                success: true,
+                user: {
+                    firstName: loggedInUser.firstName,
+                    lastName: loggedInUser.lastName,
+                    email: email
+                }
+            }).send();
+        }
+    } catch (e) {
+        console.error(e)
+        res.status(500).send();
+    }
+}
+
 module.exports = {
     getLoggedIn,
     registerUser,
-    signUserOut
+    signUserOut,
+    loginUser
 }
