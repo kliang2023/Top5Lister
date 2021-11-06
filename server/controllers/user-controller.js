@@ -22,27 +22,27 @@ registerUser = async (req, res) => {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
             return res
-                .status(400)
-                .json({ errorMessage: "Please enter all required fields." });
+                .status(200)
+                .json({ success: false, errorMessage: "Please enter all required fields." });
         }
         if (password.length < 8) {
             return res
-                .status(400)
+                .status(200)
                 .json({
-                    errorMessage: "Please enter a password of at least 8 characters."
+                    success: false,errorMessage: "Please enter a password of at least 8 characters."
                 });
         }
         if (password !== passwordVerify) {
             return res
-                .status(400)
+                .status(200)
                 .json({
-                    errorMessage: "Please enter the same password twice."
+                    success: false,errorMessage: "Please enter the same password twice."
                 })
         }
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
             return res
-                .status(400)
+                .status(200)
                 .json({
                     success: false,
                     errorMessage: "An account with this email address already exists."

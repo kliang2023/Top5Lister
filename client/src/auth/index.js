@@ -11,14 +11,16 @@ export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
      REGISTER_USER: "REGISTER_USER",
      SIGN_OUT_USER: "SIGN_OUT_USER",
-     SIGN_IN_USER: "SIGN_IN_USER"
+     SIGN_IN_USER: "SIGN_IN_USER",
+     WRITE_ERROR: "WRITE_ERROR"
     // SET_LOGGED_IN: "SET_LOGGED_IN"
 }
 
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        errorMessage: null
     });
     const history = useHistory();
 
@@ -51,6 +53,13 @@ function AuthContextProvider(props) {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true
+                })
+            }
+            case AuthActionType.WRITE_ERROR: {
+                return setAuth({
+                    user: payload.user,
+                    loggedIn: false,
+                    errorMessage: payload.errorMessage
                 })
             }
             default:
@@ -92,6 +101,15 @@ function AuthContextProvider(props) {
         // console.log("here2")
         console.log(response)      
         if (response.status === 200) {
+            if (response.data.success===false){
+                authReducer({
+                    type:AuthActionType.WRITE_ERROR,
+                    payload: {
+                        user: response.data.user,
+                        errorMessage: response.data.errorMessage
+                    }
+                })
+            } else {
             authReducer({
                 type: AuthActionType.REGISTER_USER,
                 payload: {
@@ -101,6 +119,7 @@ function AuthContextProvider(props) {
             
             history.push("/");
             store.loadIdNamePairs();
+        }
         }
 
     }

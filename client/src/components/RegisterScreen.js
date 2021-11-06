@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 import AuthContext from '../auth'
 import Copyright from './Copyright'
 import Avatar from '@mui/material/Avatar';
@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GlobalStoreContext } from '../store'
+import ErrorModal from './ErrorModal';
 
 
 export default function RegisterScreen() {
@@ -29,7 +30,13 @@ export default function RegisterScreen() {
             passwordVerify: formData.get('passwordVerify')
         }, store);
     };
-
+    useEffect(() => {
+        if (auth.errorMessage!==null){
+            return (
+                <ErrorModal></ErrorModal>
+            )
+        }
+    });
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />

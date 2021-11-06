@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+// import TextField from '@mui/material/TextField';
 /*
     This React component represents a single item in our
     Top 5 List, which can be edited or moved around.
@@ -77,12 +78,28 @@ function Top5Item(props) {
 
     if (editActive) {
         return (
-            <input
+            // <input
+            //     id={"item-" + (index+1)}
+            //     className='top5-item'
+            //     type='text'
+            //     onKeyPress={handleKeyPress}
+            //     defaultValue={props.text}
+            // />
+            <TextField
+                margin="normal"
+                required
+                fullWidth
                 id={"item-" + (index+1)}
+                label="Top 5 Item Name"
+                name="name"
+                autoComplete="Top 5 Item Name"
                 className='top5-item'
-                type='text'
                 onKeyPress={handleKeyPress}
+                // onChange={handleUpdateText}
                 defaultValue={props.text}
+                inputProps={{style: {fontSize: 48}}}
+                InputLabelProps={{style: {fontSize: 24}}}
+                autoFocus
             />)
     }
     else {
