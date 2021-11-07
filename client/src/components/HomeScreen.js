@@ -30,10 +30,11 @@ const HomeScreen = () => {
  
     
     if (store) {
+        let tempIdNamePairs = store.idNamePairs.filter(own=> own.email===auth.user.email);
         listCard = 
             <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
             {
-                store.idNamePairs.map((pair) => (
+                tempIdNamePairs.map((pair) => (
                     <ListCard
                         key={pair._id}
                         idNamePair={pair}
