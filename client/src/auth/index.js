@@ -40,19 +40,22 @@ function AuthContextProvider(props) {
             case AuthActionType.SIGN_OUT_USER: {
                 return setAuth({
                     user: null,
-                    loggedIn: false
+                    loggedIn: false,
+                    errorMessage: null
                 });
             }
             case AuthActionType.SIGN_IN_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
                 });
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
                 })
             }
             case AuthActionType.WRITE_ERROR: {
@@ -62,9 +65,22 @@ function AuthContextProvider(props) {
                     errorMessage: payload.errorMessage
                 })
             }
+            case AuthActionType.NULL_ERROR: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    errorMessage: null
+                })
+            }
             default:
                 return auth;
         }
+    }
+
+    auth.changeError = function () {
+            authReducer({
+                type: AuthActionType.NULL_ERROR
+            });
     }
 
     auth.getLoggedIn = async function () {

@@ -30,13 +30,16 @@ export default function RegisterScreen() {
             passwordVerify: formData.get('passwordVerify')
         }, store);
     };
-    useEffect(() => {
-        if (auth.errorMessage!==null){
-            return (
-                <ErrorModal></ErrorModal>
-            )
-        }
-    });
+    // useEffect(() => {
+    //     console.log(auth.errorMessage)
+    //     if (auth.errorMessage!==null){
+    //         console.log("here for stuff")
+    //         return (
+    //             <ErrorModal/>   
+    //         );
+    //     }
+    // });
+   
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -118,6 +121,7 @@ export default function RegisterScreen() {
                         >
                             Sign Up
                         </Button>
+                        {auth.errorMessage ? <ErrorModal/> : null}
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="/login/" variant="body2">
@@ -129,5 +133,7 @@ export default function RegisterScreen() {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
+       
     );
+
 }

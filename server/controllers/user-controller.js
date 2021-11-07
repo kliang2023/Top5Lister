@@ -36,7 +36,7 @@ registerUser = async (req, res) => {
             return res
                 .status(200)
                 .json({
-                    success: false,errorMessage: "Please enter the same password twice."
+                    success: false, errorMessage: "Please enter the same password twice."
                 })
         }
         const existingUser = await User.findOne({ email: email });

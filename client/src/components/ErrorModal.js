@@ -1,16 +1,24 @@
 import { Modal } from "@mui/material";
+import { useContext } from 'react';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import AuthContext from '../auth'
 
- function ErrorModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const message = "";
-    
+function ErrorModal() {
+  const { auth } = useContext(AuthContext);
+    const [open, setOpen] = React.useState(true);
+    // const open = true;
+    // const handleClose = () => open=false;
+    // const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+      setOpen(false);
+      auth.changeError();
+    }
+    console.log("in class")
+    console.log(auth.errorMessage)
 const style = {
     position: 'absolute',
     top: '50%',
@@ -32,8 +40,8 @@ const style = {
           <Box sx={style}>
             <Alert severity="error">
                 <AlertTitle>Error!</AlertTitle>
-                {message}
-                <Button onClick={handleClose}></Button>
+                {auth.errorMessage}
+                <Button onClick={handleClose}>OK</Button>
             </Alert>
           </Box>
         </Modal>
