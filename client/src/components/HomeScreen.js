@@ -4,6 +4,7 @@ import AuthContext from '../auth'
 import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
+import DeleteModal from './DeleteModal';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -60,6 +61,7 @@ const HomeScreen = () => {
                     listCard
                 }
             </div>
+            {store.listMarkedForDeletion ? <DeleteModal/> : null}
         </div>)
     
 }

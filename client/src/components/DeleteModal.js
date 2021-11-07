@@ -1,5 +1,6 @@
 import { Modal } from "@mui/material";
 import { useContext } from 'react';
+import { GlobalStoreContext } from '../store'
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,18 +8,25 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import AuthContext from '../auth'
 
-function ErrorModal() {
+function DeleteModal() {
   const { auth } = useContext(AuthContext);
+  const { store } = useContext(GlobalStoreContext);
+  let name = store.listMarkedForDeletion.name;
+function handleDeleteList(event) {
+    store.deleteMarkedList();
+}
+// function handleCloseModal(event) {
+//     store.hideDeleteListModal();
+// }
     const [open, setOpen] = React.useState(true);
     // const open = true;
     // const handleClose = () => open=false;
     // const handleOpen = () => setOpen(true);
     const handleClose = () => {
       setOpen(false);
-      auth.changeError();
+      store.unmarkListForDeletion();
     }
-    // console.log("in class")
-    // console.log(auth.errorMessage)
+   
 const style = {
     position: 'absolute',
     top: '50%',
@@ -33,18 +41,16 @@ const style = {
     return (
         <Modal
           open={open}
-          id="error-modal"
-          aria-labelledby="error-modal-modal-title"
-          aria-describedby="error-modal-description"
+          id="delete-modal"
+          aria-labelledby="delete-modal-modal-title"
+          aria-describedby="delete-modal-description"
         >
           <Box sx={style}>
-            <Alert severity="error">
-                <AlertTitle>Error!</AlertTitle>
-                {auth.errorMessage}
-                <Button onClick={handleClose}>OK</Button>
-            </Alert>
+            Delete the {name} Top 5 List?
+            <Button onClick={handleDeleteList}>Confirm</Button>
+                <Button onClick={handleClose}>Cancel</Button>
           </Box>
         </Modal>
     );
   }
-export default ErrorModal;
+export default DeleteModal;
