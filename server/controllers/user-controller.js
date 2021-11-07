@@ -95,9 +95,25 @@ loginUser = async (req, res) => {
     // console.log(req)
     try {
         const {email, password} = req.body;
+        if (password.length < 8) {
+            return res
+                .status(200)
+                .json({
+                    success: false,errorMessage: "Please enter a password of at least 8 characters."
+                });
+        }
+ 
         const loggedInUser = await User.findOne({ email: email });
+        if (!loggedInUser){
+            return res
+            .status(200)
+            .json({
+                success: false, errorMessage: "This email/password combination does not exist."
+            })
+        }
         const hash = loggedInUser.passwordHash;
         const verifyPassword = await bcrypt.compare(password, hash);
+        
         if (verifyPassword == true)
         {
             const token = auth.signToken(loggedInUser);
@@ -114,9 +130,17 @@ loginUser = async (req, res) => {
                 }
             }).send();
         }
+        else {
+            return res
+            .status(200)
+            .json({
+                success: false, errorMessage: "This email/password combination does not exist."
+            })
+        }
     } catch (e) {
         console.error(e)
         res.status(500).send();
+        console.log(res.status)
     }
 }
 

@@ -157,6 +157,15 @@ function AuthContextProvider(props) {
     auth.loginUser = async function(userData) {
         const response = await api.loginUser(userData);
         if (response.status === 200) {
+            if (response.data.success===false){
+                authReducer({
+                    type:AuthActionType.WRITE_ERROR,
+                    payload: {
+                        user: response.data.user,
+                        errorMessage: response.data.errorMessage
+                    }
+                })
+            } else {
             console.log("valid")
             authReducer({
                 type: AuthActionType.SIGN_IN_USER,
@@ -166,6 +175,7 @@ function AuthContextProvider(props) {
             })
             // console.log("here")
             history.push("/");
+        }
             // store.loadIdNamePairs();
         }
     }
