@@ -87,6 +87,11 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null
                 })
             }
+            // case GlobalStoreActionType.GET_LIST: {
+            //     return setStore({
+            //         pendingList: payload
+            //     });
+            // }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
             case GlobalStoreActionType.LOAD_ID_NAME_PAIRS: {
                 return setStore({
@@ -167,6 +172,7 @@ function GlobalStoreContextProvider(props) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
             let top5List = response.data.top5List;
+            if (top5List.ownerEmail===auth.user.email){
             top5List.name = newName;
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
@@ -187,7 +193,7 @@ function GlobalStoreContextProvider(props) {
                     getListPairs(top5List);
                 }
             }
-            updateList(top5List);
+            updateList(top5List);}
         }
     }
 
@@ -268,7 +274,8 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.deleteMarkedList = function () {
-        store.deleteList(store.listMarkedForDeletion);
+        if (store.listMarkedForDeletion.ownerEmail===auth.user.email){
+        store.deleteList(store.listMarkedForDeletion);}
     }
 
     store.unmarkListForDeletion = function () {
@@ -286,7 +293,7 @@ function GlobalStoreContextProvider(props) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
             let top5List = response.data.top5List;
-
+            if (top5List.ownerEmail === auth.user.email){
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.data.success) {
                 storeReducer({
@@ -295,8 +302,19 @@ function GlobalStoreContextProvider(props) {
                 });
                 history.push("/top5list/" + top5List._id);
             }
+            }
         }
     }
+    // store.getList = async function (id) {
+    //     let response = await api.getTop5ListById(id);
+    //     if (response.data.success) {
+    //         let top5List = response.data.top5List;
+    //         storeReducer({
+    //             type: GlobalStoreActionType.GET_LIST,
+    //             payload: top5List
+    //         });
+    //     }
+    // }
 
     store.addMoveItemTransaction = function (start, end) {
         let transaction = new MoveItem_Transaction(store, start, end);

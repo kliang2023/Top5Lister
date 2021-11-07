@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import * as React from 'react';
+import AuthContext from '../auth'
 
 // import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,12 +23,13 @@ import Modal from '@mui/material/Modal';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair } = props;
 
     function handleLoadList(event, id) {
-        if (!event.target.disabled) {
+        if (!event.target.disabled){ 
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
         }
