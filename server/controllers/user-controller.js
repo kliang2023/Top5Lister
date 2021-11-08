@@ -95,6 +95,11 @@ loginUser = async (req, res) => {
     // console.log(req)
     try {
         const {email, password} = req.body;
+        if (!email || !password) {
+            return res
+                .status(200)
+                .json({ success: false, errorMessage: "Please enter all required fields." });
+        }
         if (password.length < 8) {
             return res
                 .status(200)
